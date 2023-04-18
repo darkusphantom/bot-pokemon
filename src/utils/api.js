@@ -9,10 +9,10 @@ dotenv.config();
  */
 const getPokemon = async (id) => {
   try {
-    const data = await axios.get(`${process.env.URL_BASE}/pokemon/${id}`);
-    return data;
+    const pokemon = await axios.get(`${process.env.URL_BASE}/pokemon/${id}`);
+    return pokemon.data;
   } catch (err) {
-    console.error(err);
+    console.error("Error");
     return null;
   }
 };

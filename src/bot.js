@@ -1,5 +1,6 @@
 import { Telegraf } from "telegraf";
 import { welcomeMessage } from "./commands/start";
+import { showPokemon } from "./commands/pokemon";
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -18,6 +19,15 @@ bot.settings((ctx) => ctx.reply("Settings"));
 
 bot.command(["send"], (ctx) => ctx.reply("You send something"));
 
-bot.command(['pokemon'], (ctx) => ctx.reply("Llama a un pokemon por su nombre o ID"))
+bot.command(["pokemon"], async (ctx) => {
+  const pokemonId = ctx.message.text;
+  const pokemon = await showPokemon(pokemonId);
+  const message =
+    `ID: ${pokemon.id}\n` +
+    `Pokemon: ${pokemon.name}\n` +
+    `Type: ${pokemon.types}`;
+
+  ctx.reply(message);
+});
 
 bot.launch();
