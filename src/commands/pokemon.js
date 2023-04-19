@@ -1,26 +1,24 @@
-import { getPokemon } from "../utils/api";
-import { capitalize, deleteSpace } from "../utils/format-words";
+import { getPokemon } from "../utils/pokemon";
 
-const showPokemon = async (pokemon) => {
-  const indexData = pokemon.indexOf(" ");
-  const pokemonId = deleteSpace(pokemon.slice(indexData, pokemon.length));
-  const pokemonSelected = await getPokemon(pokemonId);
+/**
+ * Show the pokemon called it
+ * @param {Object} ctx
+ */
+export const showPokemon = async (ctx) => {
+  try {
+    const pokemonId = ctx.message.text;
+    const pokemon = await getPokemon(pokemonId);
 
-  const name = capitalize(pokemonSelected.name);
-  const pokemonTypes = pokemonSelected.types.map((type) =>
-    capitalize(type.type.name)
-  );
+    if (!pokemon) return;
 
-  const types =
-    pokemonTypes.length < 2
-      ? `${pokemonTypes[0]}`
-      : `${pokemonTypes[0]}, ${pokemonTypes[1]}`;
+    const message =
+      `ID: ${pokemon.id}\n` +
+      `Pokemon: ${pokemon.name}\n` +
+      `Type: ${pokemon.types}`;
 
-  return {
-    id: pokemonSelected.id,
-    name,
-    types,
-  };
+    ctx.reply(message);
+  } catch (error) {
+    console.error(error.message);
+    ctx.reply("The pokemon doesn't exist");
+  }
 };
-
-export { showPokemon };
