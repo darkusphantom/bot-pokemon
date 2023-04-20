@@ -1,3 +1,3 @@
 ## Telegram Bot Pokemon
 
-Un bot de Pokemon utilizando la [pokeapi](https://pokeapi.co/?ref=public-apis)
+A Pokedex bot for telegram using the API [pokeapi](https://pokeapi.co/?ref=public-apis)
