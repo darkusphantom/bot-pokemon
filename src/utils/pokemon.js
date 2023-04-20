@@ -1,5 +1,5 @@
 import { getPokemonData } from "./api";
-import { capitalize, deleteSpace } from "./format-words";
+import { capitalize } from "./format-words";
 
 /**
  *  Get a pokemon data
@@ -12,24 +12,26 @@ import { capitalize, deleteSpace } from "./format-words";
  * - type: The type of the pokemon
  */
 const getPokemon = async (pokemon) => {
-  const indexData = pokemon.indexOf(" ");
-  const pokemonId = deleteSpace(pokemon.slice(indexData, pokemon.length));
-  const pokemonSelected = await getPokemonData(pokemonId);
-
+  const pokemonSelected = await getPokemonData(pokemon);
   const name = capitalize(pokemonSelected.name);
-  const pokemonTypes = pokemonSelected.types.map((type) =>
-    capitalize(type.type.name)
+  const pokemonTypes = pokemonSelected.types.map((pk) =>
+    capitalize(pk.type.name)
   );
 
   const types =
-    pokemonTypes.length < 2
-      ? `${pokemonTypes[0]}`
-      : `${pokemonTypes[0]}, ${pokemonTypes[1]}`;
+    pokemonTypes.length < 2 ? pokemonTypes[0] : pokemonTypes.join(", ");
+
+  const abilities = pokemonSelected.abilities
+    .map((pk) => capitalize(pk.ability.name))
+    .join(", ");
 
   return {
     id: pokemonSelected.id,
     name,
     types,
+    abilities,
+    height: pokemonSelected.height,
+    sprite: pokemonSelected.sprites.front_default,
   };
 };
 
