@@ -3,10 +3,10 @@ import { welcomeMessage } from "./commands/start";
 import { showPokemon } from "./commands/pokemon";
 import { howToUseBot } from "./commands/help";
 import { showSetting } from "./commands/settings";
-import dotenv from "dotenv";
+import { configEnvironment } from "./config/config";
 
-dotenv.config();
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const { token } = configEnvironment();
+const bot = new Telegraf(token);
 
 bot.start(welcomeMessage);
 
@@ -20,6 +20,9 @@ bot.settings(showSetting);
 
 bot.command(["send"], (ctx) => ctx.reply("You send something"));
 
-bot.command(["pokemon"], showPokemon);
+bot.command(
+  ["pokemon", "pk", "Pokemon", "POKEMON", "Pokemons", "poke"],
+  showPokemon
+);
 
 bot.launch();

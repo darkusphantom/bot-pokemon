@@ -10,6 +10,7 @@ const URL_BASE = "https://pokeapi.co/api/v2";
  */
 const getPokemonData = async (id) => {
   try {
+    // const pokemon = await axios.get(`${URL_BASE}/pokemon/${id}/?language=en`);
     const pokemon = await axios.get(`${URL_BASE}/pokemon/${id}`);
     return pokemon.data;
   } catch (err) {
