@@ -1,5 +1,6 @@
 import { getPokemonData } from "../client/pokemonApiClient";
 import { getGenerationData } from "../client/generationApiClient";
+import { getRegionData } from "../client/regionApiClient";
 import { capitalize } from "./format-words";
 
 /**
@@ -24,7 +25,7 @@ export const getPokemon = async (pokemon) => {
     .map((pk) => capitalize(pk.ability.name))
     .join(", ");
 
-  const region = getRegion(pokemonSelected.id);
+  const region = getRegionName(pokemonSelected.id);
 
   return {
     id: pokemonSelected.id,
@@ -52,7 +53,6 @@ export const getPokemon = async (pokemon) => {
  */
 export const getGeneration = async (id) => {
   const generation = await getGenerationData(id);
-
   const games = generation.version_groups.map((game) => game.name).join(", ");
   const regionImage = getRegionImage(generation.id);
 
@@ -67,12 +67,31 @@ export const getGeneration = async (id) => {
 };
 
 /**
+ * Obtains the data of a Pokémon region from its ID or name.
+ *
+ * @async
+ * @param {number|string} id - The ID or name of the region of Pokémon to be obtained.
+ * @returns {Promise<Object>} An object containing the following region data:
+ */
+export const getRegion = async (id) => {
+  const region = await getRegionData(id);
+  const games = region.version_groups.map((game) => game.name).join(", ");
+
+  return {
+    name: capitalize(region.name),
+    generation: region.main_generation.name,
+    totalLocalization: region.locations.length,
+    games,
+  };
+};
+
+/**
  * Gets the name of the Pokémon region corresponding to the provided ID.
  *
  * @param {number} id - Pokemon ID.
  * @returns {string} The name of the region in capital letters, or "Region not found" if no region including the ID is found.
  */
-const getRegion = (id) => {
+const getRegionName = (id) => {
   const regionLimits = {
     kanto: { min: 1, max: 151 },
     johto: { min: 152, max: 251 },

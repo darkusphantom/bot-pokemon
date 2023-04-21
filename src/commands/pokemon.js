@@ -1,5 +1,5 @@
-import { getPokemon, getGeneration } from "../utils/pokemon";
-import { deleteSpace } from "../utils/format-words";
+import { getPokemon, getGeneration, getRegion } from "../utils/pokemon";
+import { getTextFromCommand } from "../utils/format-words";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
@@ -63,9 +63,15 @@ export const showGeneration = async (ctx) => {
 export const showRegion = async (ctx) => {
   try {
     const id = getTextFromCommand(ctx.message.text);
-    const generation = await getGeneration(id);
+    const region = await getRegion(id);
 
-    await ctx.reply();
+    const message =
+      `Region: ${region.name}\n` +
+      `Generation: ${region.generation}\n` +
+      `Total places: ${region.totalLocalization}\n` +
+      `Appears games: ${region.games}\n`;
+
+    await ctx.reply(message);
   } catch (error) {
     console.error(error);
   }
