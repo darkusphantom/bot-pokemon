@@ -1,5 +1,5 @@
-import { getPokemon, getGeneration } from "../utils/pokemon";
-import { deleteSpace } from "../utils/format-words";
+import { getPokemon, getGeneration, getRegion } from "../utils/pokemon";
+import { getTextFromCommand } from "../utils/format-words";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
@@ -10,9 +10,7 @@ import { deleteSpace } from "../utils/format-words";
  */
 export const showPokemon = async (ctx) => {
   try {
-    const { text } = ctx.message;
-    const indexData = text.indexOf(" ");
-    const pokemonId = deleteSpace(text.slice(indexData, text.length));
+    const pokemonId = getTextFromCommand(ctx.message.text);
     const pokemon = await getPokemon(pokemonId);
 
     if (!pokemon) return;
@@ -42,9 +40,7 @@ export const showPokemon = async (ctx) => {
  */
 export const showGeneration = async (ctx) => {
   try {
-    const { text } = ctx.message;
-    const indexData = text.indexOf(" ");
-    const id = deleteSpace(text.slice(indexData, text.length));
+    const id = getTextFromCommand(ctx.message.text);
     const generation = await getGeneration(id);
 
     if (!generation) return;
@@ -61,5 +57,22 @@ export const showGeneration = async (ctx) => {
   } catch (error) {
     console.error(error.message);
     ctx.reply("The region doesn't exist");
+  }
+};
+
+export const showRegion = async (ctx) => {
+  try {
+    const id = getTextFromCommand(ctx.message.text);
+    const region = await getRegion(id);
+
+    const message =
+      `Region: ${region.name}\n` +
+      `Generation: ${region.generation}\n` +
+      `Total places: ${region.totalLocalization}\n` +
+      `Appears games: ${region.games}\n`;
+
+    await ctx.reply(message);
+  } catch (error) {
+    console.error(error);
   }
 };

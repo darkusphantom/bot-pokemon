@@ -1,6 +1,6 @@
 import { Telegraf } from "telegraf";
 import { welcomeMessage } from "./commands/start";
-import { showPokemon, showGeneration } from "./commands/pokemon";
+import { showPokemon, showGeneration, showRegion } from "./commands/pokemon";
 import { howToUseBot } from "./commands/help";
 import { showSetting } from "./commands/settings";
 import { configEnvironment } from "./config/config";
@@ -23,5 +23,7 @@ bot.command(["send"], (ctx) => ctx.reply("You send something"));
 bot.command(["pokemon", "pk", "pokemons"], showPokemon);
 
 bot.command("generation", showGeneration);
+
+bot.command("region", showRegion);
 
 bot.launch();
