@@ -1,4 +1,4 @@
-import { getPokemonData } from "../client/pokemonApiClient";
+import { getPokemonData, getPokemonSpecie } from "../client/pokemonApiClient";
 import { getGenerationData } from "../client/generationApiClient";
 import { getRegionData } from "../client/regionApiClient";
 import { capitalize } from "./format-words";
@@ -77,11 +77,25 @@ export const getRegion = async (id) => {
   const region = await getRegionData(id);
   const games = region.version_groups.map((game) => game.name).join(", ");
 
+  if (!games) return;
+
   return {
     name: capitalize(region.name),
     generation: region.main_generation.name,
     totalLocalization: region.locations.length,
     games,
+  };
+};
+
+export const getEntries = async (pokemon) => {
+  const pokemonSpecie = await getPokemonSpecie(pokemon);
+  const entries = pokemonSpecie.flavor_text_entries;
+
+  if (!entries) return;
+
+  return {
+    name: pokemonSpecie.name,
+    entries,
   };
 };
 

@@ -1,11 +1,21 @@
-import { getPokemon, getGeneration, getRegion } from "../utils/pokemon";
-import { getTextFromCommand } from "../utils/format-words";
+import {
+  getPokemon,
+  getGeneration,
+  getRegion,
+  getEntries,
+} from "../utils/pokemon";
+import {
+  capitalize,
+  divideArray,
+  getTextFromCommand,
+} from "../utils/format-words";
+import { keyboardGames } from "../utils/keyboard";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
  *
  * @async
- * @param {object} ctx - The context of the conversation in which the Pokémon information is being displayed.
+ * @param {Telegraf:Context} ctx - The context of the conversation in which the Pokémon information is being displayed.
  * @returns {Promise<void>} A promise that is resolved once the Pokémon information has been displayed in the chat.
  */
 export const showPokemon = async (ctx) => {
@@ -35,7 +45,7 @@ export const showPokemon = async (ctx) => {
  * Displays the information of the Generation provided in the chat.
  *
  * @async
- * @param {object} ctx - The context of the conversation in which the Pokémon information is being displayed.
+ * @param {Telegraf:Context} ctx - The context of the conversation in which the Pokémon information is being displayed.
  * @returns {Promise<void>} A promise that is resolved once the Generation information has been displayed in the chat.
  */
 export const showGeneration = async (ctx) => {
@@ -56,10 +66,17 @@ export const showGeneration = async (ctx) => {
     await ctx.reply(message);
   } catch (error) {
     console.error(error.message);
-    ctx.reply("The region doesn't exist");
+    ctx.reply("The generation doesn't exist");
   }
 };
 
+/**
+ * Send the region Pokemon by name or id to the Telegram chat.
+ * 
+ * @async
+ * @param {Telegraf:Context} ctx - El objeto de contexto de Telegraf.
+ * @returns {Promise<void>}
+ */
 export const showRegion = async (ctx) => {
   try {
     const id = getTextFromCommand(ctx.message.text);
@@ -74,5 +91,51 @@ export const showRegion = async (ctx) => {
     await ctx.reply(message);
   } catch (error) {
     console.error(error);
+    ctx.reply("The region doesn't exist");
   }
+};
+
+/**
+ * Send the Pokédex entry for the specified Pokémon to the Telegram chat.
+ * 
+ * @async
+ * @param {Telegraf:Context} ctx - The Telegraf context object.
+ * @returns {Promise<void>}
+ */
+export const showEntry = async (ctx) => {
+  try {
+    const pokemon = getTextFromCommand(ctx.message.text);
+    const pokemonData = await getEntries(pokemon);
+
+    if (!pokemonData) return;
+
+    const pokemonEntry = pokemonData.entries.filter(
+      (entry) => entry.language.name === "en"
+    );
+
+    const games = pokemonEntry.map((entry) => entry.version.name);
+    const gamesPokemon = divideArray(games);
+    const pokemonGame = capitalize(pokemonEntry[0].version.name);
+    const pokemonName = capitalize(pokemonData.name);
+
+    const keyboard = keyboardGames(gamesPokemon);
+    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonData.entries[0].flavor_text}`;
+
+    await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
+  } catch (error) {
+    console.error(error);
+    ctx.reply("The pokemon entry doesn't exist");
+  }
+};
+
+export const showEntryByLanguage = async (languageSelected) => {
+  // const pokemon = getTextFromCommand(ctx.message.text);
+  // const pokemonEntries = await getEntries(pokemon);
+  // if (!pokemonEntries) return;
+  // const languagesNames = pokemonEntries.map((entry) => entry.language.name);
+  // const languages = Array.from(new Set(languagesNames)).sort();
+  // const languagesBtn = languages.map((language) => [
+  //   Markup.button.callback(language, language),
+  // ]);
+  // ctx.telegram.sendMessage(ctx.chat.id, "Elige un idioma", keyboard);
 };
