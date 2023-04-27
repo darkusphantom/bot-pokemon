@@ -72,7 +72,7 @@ export const showGeneration = async (ctx) => {
 
 /**
  * Send the region Pokemon by name or id to the Telegram chat.
- * 
+ *
  * @async
  * @param {Telegraf:Context} ctx - El objeto de contexto de Telegraf.
  * @returns {Promise<void>}
@@ -97,7 +97,7 @@ export const showRegion = async (ctx) => {
 
 /**
  * Send the Pokédex entry for the specified Pokémon to the Telegram chat.
- * 
+ *
  * @async
  * @param {Telegraf:Context} ctx - The Telegraf context object.
  * @returns {Promise<void>}
@@ -109,17 +109,18 @@ export const showEntry = async (ctx) => {
 
     if (!pokemonData) return;
 
-    const pokemonEntry = pokemonData.entries.filter(
+    const games = pokemonData.entries
+      .filter((entry) => entry.language.name === "en")
+      .map((entry) => entry.version.name);
+    const gamesPokemon = divideArray(games);
+    const pokemonEntry = pokemonData.entries.find(
       (entry) => entry.language.name === "en"
     );
-
-    const games = pokemonEntry.map((entry) => entry.version.name);
-    const gamesPokemon = divideArray(games);
-    const pokemonGame = capitalize(pokemonEntry[0].version.name);
+    const pokemonGame = capitalize(pokemonEntry.version.name);
     const pokemonName = capitalize(pokemonData.name);
 
     const keyboard = keyboardGames(gamesPokemon);
-    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonData.entries[0].flavor_text}`;
+    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
 
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
   } catch (error) {
