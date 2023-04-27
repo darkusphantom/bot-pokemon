@@ -2,6 +2,7 @@ import { getPokemonData, getPokemonSpecie } from "../client/pokemonApiClient";
 import { getGenerationData } from "../client/generationApiClient";
 import { getRegionData } from "../client/regionApiClient";
 import { capitalize } from "./format-words";
+import { regionImages, regionLimits } from "./const";
 
 /**
  * Gets the Pokémon information corresponding to the name or ID provided.
@@ -54,7 +55,7 @@ export const getPokemon = async (pokemon) => {
 export const getGeneration = async (id) => {
   const generation = await getGenerationData(id);
   const games = generation.version_groups.map((game) => game.name).join(", ");
-  const regionImage = getRegionImage(generation.id);
+  const regionImage = regionImages[generation.id] || "Image not found";
 
   return {
     id: generation.id,
@@ -106,18 +107,6 @@ export const getEntries = async (pokemon) => {
  * @returns {string} The name of the region in capital letters, or "Region not found" if no region including the ID is found.
  */
 const getRegionName = (id) => {
-  const regionLimits = {
-    kanto: { min: 1, max: 151 },
-    johto: { min: 152, max: 251 },
-    hoenn: { min: 252, max: 386 },
-    sinnoh: { min: 387, max: 493 },
-    unova: { min: 494, max: 649 },
-    kalos: { min: 650, max: 721 },
-    alola: { min: 722, max: 809 },
-    galar: { min: 810, max: 905 },
-    paldea: { min: 906, max: 1010 },
-  };
-
   if (!id) return "Region not found";
 
   // ([_, limits]) is a destructuring syntax that extracts
@@ -129,26 +118,4 @@ const getRegionName = (id) => {
     ([_, limits]) => id >= limits.min && id <= limits.max
   );
   return region ? capitalize(region[0]) : "Region not found";
-};
-
-/**
- * Gets the URL of the image corresponding to the Pokémon region with the provided ID.
- *
- * @param {number} id - The ID of the Pokémon region.
- * @returns {string} The URL of the image corresponding to the Pokémon region, or "Image not found" if no corresponding image is found.
- */
-const getRegionImage = (id) => {
-  const regionImages = {
-    1: "https://wallpapercave.com/wp/wp7280733.jpg", // Kanto
-    2: "https://static.wikia.nocookie.net/pokemon/images/f/fe/Johto_HGSS.png", // Johto
-    3: "https://static.wikia.nocookie.net/pokemon/images/d/dd/Hoenn_E.jpg", // Hoenn
-    4: "https://archives.bulbagarden.net/media/upload/thumb/0/08/Sinnoh_BDSP_artwork.png/1200px-Sinnoh_BDSP_artwork.png", // Sinnoh
-    5: "https://i.imgur.com/K9LZvda.jpeg", // Unova
-    6: "https://media-cerulean.cursecdn.com/attachments/4/847/super__large_kalos_map.jpg", // Kalos
-    7: "https://pm1.narvii.com/6121/60604da920ae483be27bf415e437c5f8cf546efe_hq.jpg", // Alola
-    8: "https://external-preview.redd.it/XCoGofy8sqgIKB8r51tcqCaWTeWnpkXlb6I_q5HZcDw.jpg?auto=webp&s=089b79f69e67806a82815e049c4c6c88805f54b5", // Galar
-    9: "https://progameguides.com/wp-content/uploads/2022/09/Pokemon-Scarlet-and-Violet-Paldea-Map-900x506.jpg", // Paldea
-  };
-
-  return regionImages[id] || "Image not found";
 };
