@@ -22,7 +22,7 @@ bot.settings(showSetting);
 
 bot.hears("hi", (ctx) => ctx.reply("Hey there"));
 
-bot.command(["send"], (ctx) => ctx.reply("You send something"));
+bot.command("send", (ctx) => ctx.reply("You send something"));
 bot.command(["pokemon", "pk", "pokemons"], showPokemon);
 bot.command("generation", showGeneration);
 bot.command("region", showRegion);

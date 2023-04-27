@@ -1,21 +1,14 @@
 import { capitalize, divideArray } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
-import { getEntries } from "../utils/pokemon";
+import { getEntries } from "../service/pokemon";
 
-export const listenExample = (ctx) => {
-  console.log(
-    "El usuario",
-    ctx.from.username,
-    "envió un mensaje:",
-    ctx.message.text
-  );
-  ctx.reply("¡Gracias por tu mensaje!");
-};
-
-export const sendShowPokemon = (ctx) => {
-  ctx.reply("Send the name of the pokemon");
-};
-
+/**
+ * Send the Pokedex Pokémon entry for a specified game.
+ *
+ * @async
+ * @param {Telegraf:Context} ctx - The Telegraf context object.
+ * @returns {Promise<void>}
+ */
 export const entryPokemonHandler = async (ctx) => {
   try {
     const query = ctx.callbackQuery;

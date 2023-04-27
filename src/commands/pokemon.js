@@ -33,11 +33,10 @@ export const showPokemon = async (ctx) => {
       `Abilities: ${pokemon.abilities}\n` +
       `Height: ${pokemon.height}dm\n`;
 
-    await ctx.replyWithPhoto({ url: pokemon.sprite, caption: message });
-    await ctx.reply(message);
+    await ctx.replyWithPhoto(pokemon.sprite, { caption: message });
   } catch (error) {
     console.error(error.message);
-    ctx.reply("The pokemon doesn't exist");
+    ctx.reply("The pokemon doesn't exist. Try by the ID pokemon");
   }
 };
 
@@ -62,8 +61,9 @@ export const showGeneration = async (ctx) => {
       `New Pokemon Types: ${generation.totalNewTypes}\n` +
       `Games: ${generation.games}\n`;
 
-    await ctx.replyWithPhoto({ url: generation.src, caption: message });
-    await ctx.reply(message);
+    await ctx.replyWithPhoto(generation.src, {
+      caption: message,
+    });
   } catch (error) {
     console.error(error.message);
     ctx.reply("The generation doesn't exist");
@@ -105,27 +105,32 @@ export const showRegion = async (ctx) => {
 export const showEntry = async (ctx) => {
   try {
     const pokemon = getTextFromCommand(ctx.message.text);
-    const pokemonData = await getEntries(pokemon);
+    const pokemonEntryData = await getEntries(pokemon);
+    const pokemonData = await getPokemon(pokemon);
 
-    if (!pokemonData) return;
+    if (!pokemonEntryData || !pokemonData) return;
 
-    const games = pokemonData.entries
+    const games = pokemonEntryData.entries
       .filter((entry) => entry.language.name === "en")
       .map((entry) => entry.version.name);
     const gamesPokemon = divideArray(games);
-    const pokemonEntry = pokemonData.entries.find(
+    const pokemonEntry = pokemonEntryData.entries.find(
       (entry) => entry.language.name === "en"
     );
     const pokemonGame = capitalize(pokemonEntry.version.name);
-    const pokemonName = capitalize(pokemonData.name);
+    const pokemonName = capitalize(pokemonEntryData.name);
 
     const keyboard = keyboardGames(gamesPokemon);
     const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
 
-    await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
+    await ctx.replyWithPhoto(pokemonData.sprite, {
+      caption: message,
+      reply_markup: keyboard,
+    });
+    // await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
   } catch (error) {
     console.error(error);
-    ctx.reply("The pokemon entry doesn't exist");
+    ctx.reply("The pokemon entry doesn't exist. Try by the ID pokemon");
   }
 };
 
