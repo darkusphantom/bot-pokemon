@@ -1,8 +1,8 @@
 import { getPokemonData, getPokemonSpecie } from "../client/pokemonApiClient";
 import { getGenerationData } from "../client/generationApiClient";
 import { getRegionData } from "../client/regionApiClient";
-import { capitalize } from "./format-words";
-import { regionImages, regionLimits } from "./const";
+import { capitalize } from "../utils/format-words";
+import { regionImages, regionLimits } from "../utils/const";
 
 /**
  * Gets the Pokémon information corresponding to the name or ID provided.

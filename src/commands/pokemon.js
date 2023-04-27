@@ -3,7 +3,7 @@ import {
   getGeneration,
   getRegion,
   getEntries,
-} from "../utils/pokemon";
+} from "../service/pokemon";
 import {
   capitalize,
   divideArray,
@@ -129,14 +129,14 @@ export const showEntry = async (ctx) => {
   }
 };
 
-export const showEntryByLanguage = async (languageSelected) => {
-  // const pokemon = getTextFromCommand(ctx.message.text);
-  // const pokemonEntries = await getEntries(pokemon);
-  // if (!pokemonEntries) return;
-  // const languagesNames = pokemonEntries.map((entry) => entry.language.name);
-  // const languages = Array.from(new Set(languagesNames)).sort();
-  // const languagesBtn = languages.map((language) => [
-  //   Markup.button.callback(language, language),
-  // ]);
-  // ctx.telegram.sendMessage(ctx.chat.id, "Elige un idioma", keyboard);
-};
+// export const showEntryByLanguage = async (languageSelected) => {
+// const pokemon = getTextFromCommand(ctx.message.text);
+// const pokemonEntries = await getEntries(pokemon);
+// if (!pokemonEntries) return;
+// const languagesNames = pokemonEntries.map((entry) => entry.language.name);
+// const languages = Array.from(new Set(languagesNames)).sort();
+// const languagesBtn = languages.map((language) => [
+//   Markup.button.callback(language, language),
+// ]);
+// ctx.telegram.sendMessage(ctx.chat.id, "Elige un idioma", keyboard);
+// };
