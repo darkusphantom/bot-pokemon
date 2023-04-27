@@ -1,0 +1,10 @@
+{
+  "start": {
+    "init": "Welcome to the bot",
+    "pokedex": "I am the Pokedex and i will be your tool in your adventure.",
+    "how_to_use": "How to use me? This is my commands:\n/start - show the welcome message\n/help - show the commands available\n/settings - show the configuration\n/pokemon + name or ID - The pokemon to see. Example: /pokemon pikachu\n\nTry to use /help to see all commands"
+  },
+  "settings": {
+    "lang": "Change the language"
+  }
+}

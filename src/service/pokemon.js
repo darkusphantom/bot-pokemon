@@ -90,6 +90,7 @@ export const getRegion = async (id) => {
 
 export const getEntries = async (pokemon) => {
   const pokemonSpecie = await getPokemonSpecie(pokemon);
+  console.log(pokemonSpecie + "\n\n");
   const entries = pokemonSpecie.flavor_text_entries;
 
   if (!entries) return;

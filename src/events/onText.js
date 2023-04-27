@@ -13,6 +13,7 @@ export const entryPokemonHandler = async (ctx) => {
   try {
     const query = ctx.callbackQuery;
     const game = query.data.substring(6);
+    console.log(query);
     const pokemon = query.message.text.split(" ")[2];
     const pokemonData = await getEntries(pokemon.toLowerCase());
 
@@ -35,6 +36,11 @@ export const entryPokemonHandler = async (ctx) => {
 
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
   }
+};
+
+export const changeLanguageHandler = async (ctx) => {
+  const { data: lang } = ctx;
+  console.log(lang);
 };

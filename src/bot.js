@@ -8,7 +8,7 @@ import {
 } from "./commands/pokemon";
 import { howToUseBot } from "./commands/help";
 import { showSetting } from "./commands/settings";
-import { entryPokemonHandler } from "./events/onText";
+import { changeLanguageHandler, entryPokemonHandler } from "./events/onText";
 import { configEnvironment } from "./config/config";
 
 const { token } = configEnvironment();
@@ -31,7 +31,7 @@ bot.command("entry", showEntry);
 bot.on("sticker", (ctx) => ctx.reply("👍"));
 bot.on("callback_query", entryPokemonHandler);
 
-// bot.action("en", showEntryByLanguage("EN"));
-// bot.action("es", showEntryByLanguage("ES"));
+// bot.action("en", changeLanguageHandler);
+// bot.action("es", changeLanguageHandler);
 
 bot.launch();
