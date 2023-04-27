@@ -35,3 +35,16 @@ export const getTextFromCommand = (command) => {
   const text = command.slice(indexData, command.length);
   return deleteSpace(text);
 };
+
+/**
+ * Splits an array into sub-arrays of two elements each.
+ * @param {Array} arr - The array to split.
+ * @returns {Array} - A new array with the sub-arrays of two elements each.
+ */
+export const divideArray = (arr) => {
+  const result = [];
+  for (let i = 0; i < arr.length; i += 2) {
+    result.push(arr.slice(i, i + 2));
+  }
+  return result;
+};

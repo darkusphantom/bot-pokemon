@@ -30,3 +30,20 @@ export const getPokemonData = async (pokemon) => {
     return null;
   }
 };
+
+/**
+ * Gets the Pokémon specie data by ID or Name.
+ * @async
+ * @param {number | string} id - The ID of the Pokémon specie to be retrieved.
+ * @returns {Promise<Object|null>} An object with the Pokémon data corresponding to the provided ID, or null if the information could not be obtained.
+ */
+export const getPokemonSpecie = async (pokemon) => {
+  try {
+    const id = !Number(pokemon) ? pokemon.toLowerCase() : pokemon;
+    const response = await baseApiClient.get(`/pokemon-species/${id}`);
+    return response.data;
+  } catch (err) {
+    console.error("The pokemon species data could not be retrieved");
+    return null;
+  }
+};
