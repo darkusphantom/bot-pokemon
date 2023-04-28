@@ -10,6 +10,7 @@ import {
   getTextFromCommand,
 } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
+import { getLanguage } from "../utils/language";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
@@ -113,16 +114,19 @@ export const showEntry = async (ctx) => {
     const pokemon = getTextFromCommand(ctx.message.text);
     const pokemonEntryData = await getEntries(pokemon);
     const pokemonData = await getPokemon(pokemon);
+    const lang = getLanguage(ctx);
 
     if (!pokemonEntryData || !pokemonData) return;
 
     const games = pokemonEntryData.entries
-      .filter((entry) => entry.language.name === "en")
+      .filter((entry) => entry.language.name === lang)
       .map((entry) => entry.version.name);
+
     const gamesPokemon = divideArray(games);
     const pokemonEntry = pokemonEntryData.entries.find(
-      (entry) => entry.language.name === "en"
+      (entry) => entry.language.name === lang
     );
+
     const pokemonGame = capitalize(pokemonEntry.version.name);
     const pokemonName = capitalize(pokemonEntryData.name);
 

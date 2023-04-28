@@ -9,9 +9,6 @@ const baseApiClient = new axios.create({
   headers: {
     "Content-Type": "application/json;charset=utf-8",
   },
-  params: {
-    language: "en",
-  },
 });
 
 /**

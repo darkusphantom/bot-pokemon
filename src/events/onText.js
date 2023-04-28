@@ -1,6 +1,7 @@
 import { capitalize, divideArray } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
 import { getEntries } from "../service/pokemon";
+import { getLanguage } from "../utils/language";
 
 /**
  * Send the Pokedex Pokémon entry for a specified game.
@@ -15,15 +16,16 @@ export const entryPokemonHandler = async (ctx) => {
     const game = query.data.substring(6);
     const pokemon = query.message.text.split(" ")[2];
     const pokemonData = await getEntries(pokemon.toLowerCase());
+    const lang = getLanguage(ctx);
 
     if (!pokemonData) return;
 
     const games = pokemonData.entries
-      .filter((entry) => entry.language.name === "en")
+      .filter((entry) => entry.language.name === lang)
       .map((entry) => entry.version.name);
 
     const pokemonEntry = pokemonData.entries.find(
-      (entry) => entry.version.name === game && entry.language.name === "en"
+      (entry) => entry.version.name === game && entry.language.name === lang
     );
 
     const gamesPokemon = divideArray(games);
