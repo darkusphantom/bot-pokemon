@@ -1,9 +1,9 @@
 import { Markup } from "telegraf";
 
-export const keyboardLanguage = (language) =>
+export const keyboardLanguage = () =>
   Markup.inlineKeyboard([
-    Markup.button.callback("EN", "en"),
-    Markup.button.callback("ES", "es"),
+    Markup.button.callback("EN", "lang_en"),
+    Markup.button.callback("ES", "lang_es"),
   ]);
 
 export const keyboardGames = (games) => {
