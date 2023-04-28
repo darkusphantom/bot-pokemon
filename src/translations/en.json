@@ -6,5 +6,9 @@
   },
   "settings": {
     "lang": "Change the language"
+  },
+  "language": {
+    "en": "You are using now english language",
+    "es": "El español será el idioma por defecto"
   }
 }

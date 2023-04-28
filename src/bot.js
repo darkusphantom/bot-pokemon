@@ -1,4 +1,4 @@
-import { Telegraf } from "telegraf";
+import { Telegraf, session } from "telegraf";
 import { welcomeMessage } from "./commands/start";
 import {
   showPokemon,
@@ -8,11 +8,14 @@ import {
 } from "./commands/pokemon";
 import { howToUseBot } from "./commands/help";
 import { showSetting } from "./commands/settings";
-import { changeLanguageHandler, entryPokemonHandler } from "./events/onText";
+import { entryPokemonHandler } from "./events/onText";
+import { changeLanguageHandler } from "./events/onLanguage";
 import { configEnvironment } from "./config/config";
 
 const { token } = configEnvironment();
 const bot = new Telegraf(token);
+
+bot.use(session({ defaultSession: () => ({ language: "en" }) }));
 
 bot.start(welcomeMessage);
 
@@ -29,9 +32,9 @@ bot.command("region", showRegion);
 bot.command("entry", showEntry);
 
 bot.on("sticker", (ctx) => ctx.reply("👍"));
-bot.on("callback_query", entryPokemonHandler);
+// bot.on("callback_query", entryPokemonHandler);
 
-// bot.action("en", changeLanguageHandler);
-// bot.action("es", changeLanguageHandler);
+bot.action("en", changeLanguageHandler);
+bot.action("es", changeLanguageHandler);
 
 bot.launch();
