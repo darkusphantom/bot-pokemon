@@ -35,8 +35,10 @@ export const showPokemon = async (ctx) => {
 
     await ctx.replyWithPhoto(pokemon.sprite, { caption: message });
   } catch (error) {
-    console.error(error.message);
-    ctx.reply("The pokemon doesn't exist. Try by the ID pokemon");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      ctx.reply("The pokemon doesn't exist. Try by the ID pokemon");
+    }
   }
 };
 
@@ -65,8 +67,10 @@ export const showGeneration = async (ctx) => {
       caption: message,
     });
   } catch (error) {
-    console.error(error.message);
-    ctx.reply("The generation doesn't exist");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      ctx.reply("The generation doesn't exist");
+    }
   }
 };
 
@@ -90,8 +94,10 @@ export const showRegion = async (ctx) => {
 
     await ctx.reply(message);
   } catch (error) {
-    console.error(error);
-    ctx.reply("The region doesn't exist");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      ctx.reply("The region doesn't exist");
+    }
   }
 };
 
@@ -123,25 +129,17 @@ export const showEntry = async (ctx) => {
     const keyboard = keyboardGames(gamesPokemon);
     const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
 
-    await ctx.replyWithPhoto(pokemonData.sprite, {
-      caption: message,
-      reply_markup: keyboard,
-    });
-    // await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
+    await ctx.replyWithPhoto(pokemonData.sprite);
+    await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
   } catch (error) {
-    console.error(error);
-    ctx.reply("The pokemon entry doesn't exist. Try by the ID pokemon");
+    console.error(error.name, error.message);
+
+    if (error.name === "Error") {
+      ctx.reply("An error occurred. Try later");
+    }
+
+    if (error.name === "TypeError") {
+      ctx.reply("The pokemon entry doesn't exist. Try by the ID pokemon");
+    }
   }
 };
-
-// export const showEntryByLanguage = async (languageSelected) => {
-// const pokemon = getTextFromCommand(ctx.message.text);
-// const pokemonEntries = await getEntries(pokemon);
-// if (!pokemonEntries) return;
-// const languagesNames = pokemonEntries.map((entry) => entry.language.name);
-// const languages = Array.from(new Set(languagesNames)).sort();
-// const languagesBtn = languages.map((language) => [
-//   Markup.button.callback(language, language),
-// ]);
-// ctx.telegram.sendMessage(ctx.chat.id, "Elige un idioma", keyboard);
-// };
