@@ -1,3 +1,4 @@
+import i18n from "../config/i18";
 import {
   getPokemon,
   getGeneration,
@@ -23,22 +24,23 @@ export const showPokemon = async (ctx) => {
   try {
     const pokemonId = getTextFromCommand(ctx.message.text);
     const pokemon = await getPokemon(pokemonId);
+    const height = pokemon.height / 10;
 
     if (!pokemon) return;
 
     const message =
-      `Pokedex National: ${pokemon.id}\n` +
+      `${i18n.t("pokemon.pokedex_national")}: ${pokemon.id}\n` +
       `Pokemon: ${pokemon.name}\n` +
-      `Region: ${pokemon.region}\n` +
-      `Type: ${pokemon.types}\n` +
-      `Abilities: ${pokemon.abilities}\n` +
-      `Height: ${pokemon.height}dm\n`;
+      `${i18n.t("pokemon.region")}: ${pokemon.region}\n` +
+      `${i18n.t("pokemon.type")}: ${pokemon.types}\n` +
+      `${i18n.t("pokemon.abilities")}: ${pokemon.abilities}\n` +
+      `${i18n.t("pokemon.height")}: ${height}m\n`;
 
     await ctx.replyWithPhoto(pokemon.sprite, { caption: message });
   } catch (error) {
     console.error(error.name, error.message);
     if (error.name === "TypeError") {
-      ctx.reply("The pokemon doesn't exist. Try by the ID pokemon");
+      await ctx.reply(i18n.t("error.pokemon_doesnt_exist"));
     }
   }
 };
@@ -58,11 +60,11 @@ export const showGeneration = async (ctx) => {
     if (!generation) return;
 
     const message =
-      `Generation N°: ${generation.id}\n` +
-      `Name Region: ${generation.region}\n` +
-      `New Pokemon: ${generation.totalNewPokemon}\n` +
-      `New Pokemon Types: ${generation.totalNewTypes}\n` +
-      `Games: ${generation.games}\n`;
+      `${i18n.t("pokemon.generation")} N°: ${generation.id}\n` +
+      `${i18n.t("pokemon.region")}: ${generation.region}\n` +
+      `${i18n.t("pokemon.new_pokemon")}: ${generation.totalNewPokemon}\n` +
+      `${i18n.t("pokemon.new_pokemon_types")}: ${generation.totalNewTypes}\n` +
+      `${i18n.t("pokemon.games")}: ${generation.games}\n`;
 
     await ctx.replyWithPhoto(generation.src, {
       caption: message,
@@ -70,7 +72,7 @@ export const showGeneration = async (ctx) => {
   } catch (error) {
     console.error(error.name, error.message);
     if (error.name === "TypeError") {
-      ctx.reply("The generation doesn't exist");
+      await ctx.reply(i18n.t("error.generation"));
     }
   }
 };
@@ -88,16 +90,16 @@ export const showRegion = async (ctx) => {
     const region = await getRegion(id);
 
     const message =
-      `Region: ${region.name}\n` +
-      `Generation: ${region.generation}\n` +
-      `Total places: ${region.totalLocalization}\n` +
-      `Appears games: ${region.games}\n`;
+      `${i18n.t("pokemon.region")}: ${region.name}\n` +
+      `${i18n.t("pokemon.generation")}: ${region.generation}\n` +
+      `${i18n.t("pokemon.total_places")}: ${region.totalLocalization}\n` +
+      `${i18n.t("pokemon.appears_games")}: ${region.games}\n`;
 
     await ctx.reply(message);
   } catch (error) {
     console.error(error.name, error.message);
     if (error.name === "TypeError") {
-      ctx.reply("The region doesn't exist");
+      ctx.reply(i18n.t("error.generation"));
     }
   }
 };
@@ -131,7 +133,10 @@ export const showEntry = async (ctx) => {
     const pokemonName = capitalize(pokemonEntryData.name);
 
     const keyboard = keyboardGames(gamesPokemon);
-    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
+    const message =
+      `${i18n.t("pokemon.entry_of")} ${pokemonName}\n\n` +
+      `Pokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `${pokemonEntry.flavor_text}`;
 
     await ctx.replyWithPhoto(pokemonData.sprite);
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
@@ -139,11 +144,11 @@ export const showEntry = async (ctx) => {
     console.error(error.name, error.message);
 
     if (error.name === "Error") {
-      ctx.reply("An error occurred. Try later");
+      await ctx.reply(i18n.t("error.default"));
     }
 
     if (error.name === "TypeError") {
-      ctx.reply("The pokemon entry doesn't exist. Try by the ID pokemon");
+      await ctx.reply(i18n.t("error.entry"));
     }
   }
 };

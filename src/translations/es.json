@@ -20,5 +20,27 @@
     "entry": "/entry + name or ID - Muestra una entrada del Pokemon seleccionado según el juego.\nEjemplo /entry bulbasaur",
     "help": "/help - mostrar los comandos disponibles.",
     "settings": "/settings - muestra la configuración."
+  },
+  "error": {
+    "default": "Ha ocurrido un error",
+    "pokemon_doesnt_exist": "El pokemon no existe. Intente por ID u otro nombre",
+    "region": "La región no existe. Intente con otra region.",
+    "generation": "La generación no existe. Intente con otra generación.",
+    "entry": "La entrada del pokemon no existe. Intente con con el ID u otro Pokemon."
+  },
+  "pokemon": {
+    "pokedex_national": "Pokedex Nacional",
+    "region": "Región",
+    "type": "Tipo",
+    "abilities": "Habilidades",
+    "height": "Altura",
+    "generation": "Generación",
+    "new_pokemon": "Pokemon nuevos",
+    "new_pokemon_types": "Tipos nuevos",
+    "games": "Juegos",
+    "total_places": "Total de Lugares",
+    "appears_games": "Apariciones",
+    "entry_of": "Entrada de",
+    "game": "Juego"
   }
 }

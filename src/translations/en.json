@@ -23,6 +23,25 @@
     "setting": "/settings - show the configuration."
   },
   "error": {
-    "default": "An error occurred"
+    "default": "An error occurred",
+    "pokemon_doesnt_exist": "The pokemon doesn't exist. Try by the ID or another pokemon",
+    "region": "The region doesn't exist. Try by another region.",
+    "generation": "The generation doesn't exist. Try by another generation",
+    "entry": "The pokemon entry doesn't exist. Try by the ID or another pokemon."
+  },
+  "pokemon": {
+    "pokedex_national": "Pokedex National",
+    "region": "Region",
+    "type": "Type",
+    "abilities": "Abilities",
+    "height": "Height",
+    "generation": "Generation",
+    "new_pokemon": "New pokemon",
+    "new_pokemon_types": "New types",
+    "games": "Games",
+    "total_places": "Total places",
+    "appears_games": "Appears games",
+    "entry_of": "Entry of",
+    "game": "Game"
   }
 }
