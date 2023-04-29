@@ -15,8 +15,8 @@ export const entryPokemonHandler = async (ctx) => {
   try {
     const query = ctx.callbackQuery;
     const game = query.data.substring(6);
-    const pokemon = query.message.text.split(" ")[2];
-    const pokemonData = await getEntries(pokemon.toLowerCase());
+    const pokemon = query.message.text.split(" ")[2].split(/\n\nPokemon/)[0];
+    const pokemonData = await getEntries(pokemon);
     const lang = getLanguage(ctx);
 
     if (!pokemonData) return;

@@ -134,8 +134,8 @@ export const showEntry = async (ctx) => {
 
     const keyboard = keyboardGames(gamesPokemon);
     const message =
-      `${i18n.t("pokemon.entry_of")} ${pokemonName}\n\n` +
-      `Pokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `${i18n.t("pokemon.entry_of")} ${pokemonName}` +
+      `\n\nPokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
       `${pokemonEntry.flavor_text}`;
 
     await ctx.replyWithPhoto(pokemonData.sprite);
