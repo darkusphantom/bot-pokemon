@@ -16,5 +16,6 @@ export const showSetting = async (ctx) => {
     await ctx.reply(message, keyboard);
   } catch (error) {
     console.error(error.message);
+    await ctx.reply(i18n.t("error.default"));
   }
 };
