@@ -2,6 +2,7 @@ import { capitalize, divideArray } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
 import { getEntries } from "../service/pokemon";
 import { getLanguage } from "../utils/language";
+import i18n from "../config/i18";
 
 /**
  * Send the Pokedex Pokémon entry for a specified game.
@@ -33,10 +34,21 @@ export const entryPokemonHandler = async (ctx) => {
     const pokemonName = capitalize(pokemon);
 
     const keyboard = keyboardGames(gamesPokemon);
-    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
+    const message =
+      `${i18n.t("pokemon.entry_of")} ${pokemonName}\n\n` +
+      `Pokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `${pokemonEntry.flavor_text}`;
 
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error.message);
+
+    if (error.name === "Error") {
+      await ctx.reply(i18n.t("error.default"));
+    }
+
+    if (error.name === "TypeError") {
+      await ctx.reply(i18n.t("error.entry"));
+    }
   }
 };
