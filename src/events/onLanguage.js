@@ -14,6 +14,6 @@ export const changeLanguageHandler = async (ctx) => {
     await ctx.reply(message);
   } catch (error) {
     console.error(error.message);
-    ctx.reply("Error to change the language. Try again later.");
+    ctx.reply(i18n.t("error.language"));
   }
 };

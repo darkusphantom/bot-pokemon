@@ -26,7 +26,8 @@
     "pokemon_doesnt_exist": "El pokemon no existe. Intente por ID u otro nombre",
     "region": "La región no existe. Intente con otra region.",
     "generation": "La generación no existe. Intente con otra generación.",
-    "entry": "La entrada del pokemon no existe. Intente con con el ID u otro Pokemon."
+    "entry": "La entrada del pokemon no existe. Intente con con el ID u otro Pokemon.",
+    "language": "Ocurrió un error al cambiar de idioma. Intente de nuevo."
   },
   "pokemon": {
     "pokedex_national": "Pokedex Nacional",
