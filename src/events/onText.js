@@ -36,7 +36,7 @@ export const entryPokemonHandler = async (ctx) => {
     const keyboard = keyboardGames(gamesPokemon);
     const message =
       `${i18n.t("pokemon.entry_of")} ${pokemonName}\n\n` +
-      `Pokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `Pokemon ${pokemonGame}:\n` +
       `${pokemonEntry.flavor_text}`;
 
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);

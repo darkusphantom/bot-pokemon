@@ -88,6 +88,13 @@ export const getRegion = async (id) => {
   };
 };
 
+/**
+ * Gets the flavor text entries of a specific pokemon.
+ *
+ * @async
+ * @param {string} pokemon - The name or ID of the pokemon.
+ * @returns {Promise<{name: string, entries: Array}>} - Object containing the pokemon name and its flavor text entries.
+ */
 export const getEntries = async (pokemon) => {
   const pokemonSpecie = await getPokemonSpecie(pokemon);
   const entries = pokemonSpecie.flavor_text_entries;

@@ -1,3 +1,6 @@
+/**
+ * The pokedex limits for region in the pokedex national
+ */
 export const regionLimits = {
   kanto: { min: 1, max: 151 },
   johto: { min: 152, max: 251 },
@@ -10,6 +13,9 @@ export const regionLimits = {
   paldea: { min: 906, max: 1010 },
 };
 
+/**
+ * All url region images
+ */
 export const regionImages = {
   1: "https://wallpapercave.com/wp/wp7280733.jpg", // Kanto
   2: "https://static.wikia.nocookie.net/pokemon/images/f/fe/Johto_HGSS.png", // Johto
