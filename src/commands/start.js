@@ -12,7 +12,7 @@ export const welcomeMessage = async (ctx) => {
       `, ${ctx.from.first_name} ${ctx.from.last_name}\n` +
       `${i18n.t("start.pokedex")}\n\n`;
     const message =
-      `${i18n.t("start.how_to_use")}\n\n` +
+      `${i18n.t("command.how_to_use")}\n\n` +
       `${i18n.t("command.start")}\n` +
       `${i18n.t("command.help")}\n` +
       `${i18n.t("command.setting")}\n\n` +

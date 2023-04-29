@@ -2,7 +2,6 @@
   "start": {
     "init": "Bienvenido al bot.",
     "pokedex": "Soy la Pokedex y seré tu herramienta en tu aventura.",
-    "how_to_use": "¿Cómo funciono? Estos son mis comandos:",
     "help_commands": "Usa el comando /help para ver todos los comandos."
   },
   "settings": {
@@ -13,6 +12,7 @@
     "es": "El español será el idioma por defecto."
   },
   "command": {
+    "how_to_use": "¿Cómo funciono? Estos son mis comandos:",
     "start": "/start - mostrar el mensaje de bienvenida.",
     "pokemon": "/pokemon + nombre o ID - El pokemon a buscar.\nEjemplo: /pokemon pikachu\nEjemplo2: /pokemon 25\n",
     "generation": "/generation + (1-9) - Muestra los datos de la generación.\nEjemplo: /generation 4",

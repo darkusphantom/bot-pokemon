@@ -2,7 +2,7 @@
   "start": {
     "init": "Welcome to the bot.",
     "pokedex": "I am the Pokedex and i will be your tool in your adventure.",
-    "how_to_use": "How to use me? This is my commands:",
+
     "help_commands": "Try to use /help to see all commands."
   },
   "settings": {
@@ -13,6 +13,7 @@
     "es": "El español será el idioma por defecto."
   },
   "command": {
+    "how_to_use": "How to use me? This is my commands:",
     "start": "/start - show the welcome message.",
     "pokemon": "/pokemon + name or ID - The pokemon to see.\nExample: /pokemon pikachu\nExample2: /pokemon 25\n",
     "generation": "/generation + (1-9) - The generation to see.\nExample: /generation 4",
@@ -20,5 +21,8 @@
     "entry": "/entry + name or ID - The entry pokemon.\nExample /entry bulbasaur",
     "help": "/help - show the commands available.",
     "setting": "/settings - show the configuration."
+  },
+  "error": {
+    "default": "An error occurred"
   }
 }
