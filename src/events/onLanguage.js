@@ -1,6 +1,15 @@
 import i18n from "../config/i18";
 import { getLanguage, setLanguage } from "../utils/language";
 
+/**
+ * Change the language
+ *
+ * Available languages: ES, ENG
+ *
+ * @async
+ * @param {Telegraf:Context} ctx - The Telegraf context object.
+ * @returns {Promise<void>}
+ */
 export const changeLanguageHandler = async (ctx) => {
   try {
     const lang = ctx.match[0].substring(5);
