@@ -1,36 +1,32 @@
 import { capitalize, divideArray } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
-import { getEntries } from "../utils/pokemon";
+import { getEntries } from "../service/pokemon";
+import { getLanguage } from "../utils/language";
+import i18n from "../config/i18";
 
-export const listenExample = (ctx) => {
-  console.log(
-    "El usuario",
-    ctx.from.username,
-    "envió un mensaje:",
-    ctx.message.text
-  );
-  ctx.reply("¡Gracias por tu mensaje!");
-};
-
-export const sendShowPokemon = (ctx) => {
-  ctx.reply("Send the name of the pokemon");
-};
-
+/**
+ * Send the Pokedex Pokémon entry for a specified game.
+ *
+ * @async
+ * @param {Telegraf:Context} ctx - The Telegraf context object.
+ * @returns {Promise<void>}
+ */
 export const entryPokemonHandler = async (ctx) => {
   try {
     const query = ctx.callbackQuery;
     const game = query.data.substring(6);
-    const pokemon = query.message.text.split(" ")[2];
-    const pokemonData = await getEntries(pokemon.toLowerCase());
+    const pokemon = query.message.text.split(" ")[2].split(/\n\nPokemon/)[0];
+    const pokemonData = await getEntries(pokemon);
+    const lang = getLanguage(ctx);
 
     if (!pokemonData) return;
 
     const games = pokemonData.entries
-      .filter((entry) => entry.language.name === "en")
+      .filter((entry) => entry.language.name === lang)
       .map((entry) => entry.version.name);
 
     const pokemonEntry = pokemonData.entries.find(
-      (entry) => entry.version.name === game && entry.language.name === "en"
+      (entry) => entry.version.name === game && entry.language.name === lang
     );
 
     const gamesPokemon = divideArray(games);
@@ -38,10 +34,21 @@ export const entryPokemonHandler = async (ctx) => {
     const pokemonName = capitalize(pokemon);
 
     const keyboard = keyboardGames(gamesPokemon);
-    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
+    const message =
+      `${i18n.t("pokemon.entry_of")} ${pokemonName}\n\n` +
+      `Pokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `${pokemonEntry.flavor_text}`;
 
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error.message);
+
+    if (error.name === "Error") {
+      await ctx.reply(i18n.t("error.default"));
+    }
+
+    if (error.name === "TypeError") {
+      await ctx.reply(i18n.t("error.entry"));
+    }
   }
 };

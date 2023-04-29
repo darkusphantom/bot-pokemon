@@ -1,15 +1,17 @@
+import i18n from "../config/i18";
 import {
   getPokemon,
   getGeneration,
   getRegion,
   getEntries,
-} from "../utils/pokemon";
+} from "../service/pokemon";
 import {
   capitalize,
   divideArray,
   getTextFromCommand,
 } from "../utils/format-words";
 import { keyboardGames } from "../utils/keyboard";
+import { getLanguage } from "../utils/language";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
@@ -22,22 +24,24 @@ export const showPokemon = async (ctx) => {
   try {
     const pokemonId = getTextFromCommand(ctx.message.text);
     const pokemon = await getPokemon(pokemonId);
+    const height = pokemon.height / 10;
 
     if (!pokemon) return;
 
     const message =
-      `Pokedex National: ${pokemon.id}\n` +
+      `${i18n.t("pokemon.pokedex_national")}: ${pokemon.id}\n` +
       `Pokemon: ${pokemon.name}\n` +
-      `Region: ${pokemon.region}\n` +
-      `Type: ${pokemon.types}\n` +
-      `Abilities: ${pokemon.abilities}\n` +
-      `Height: ${pokemon.height}dm\n`;
+      `${i18n.t("pokemon.region")}: ${pokemon.region}\n` +
+      `${i18n.t("pokemon.type")}: ${pokemon.types}\n` +
+      `${i18n.t("pokemon.abilities")}: ${pokemon.abilities}\n` +
+      `${i18n.t("pokemon.height")}: ${height}m\n`;
 
-    await ctx.replyWithPhoto({ url: pokemon.sprite, caption: message });
-    await ctx.reply(message);
+    await ctx.replyWithPhoto(pokemon.sprite, { caption: message });
   } catch (error) {
-    console.error(error.message);
-    ctx.reply("The pokemon doesn't exist");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      await ctx.reply(i18n.t("error.pokemon_doesnt_exist"));
+    }
   }
 };
 
@@ -56,17 +60,20 @@ export const showGeneration = async (ctx) => {
     if (!generation) return;
 
     const message =
-      `Generation N°: ${generation.id}\n` +
-      `Name Region: ${generation.region}\n` +
-      `New Pokemon: ${generation.totalNewPokemon}\n` +
-      `New Pokemon Types: ${generation.totalNewTypes}\n` +
-      `Games: ${generation.games}\n`;
+      `${i18n.t("pokemon.generation")} N°: ${generation.id}\n` +
+      `${i18n.t("pokemon.region")}: ${generation.region}\n` +
+      `${i18n.t("pokemon.new_pokemon")}: ${generation.totalNewPokemon}\n` +
+      `${i18n.t("pokemon.new_pokemon_types")}: ${generation.totalNewTypes}\n` +
+      `${i18n.t("pokemon.games")}: ${generation.games}\n`;
 
-    await ctx.replyWithPhoto({ url: generation.src, caption: message });
-    await ctx.reply(message);
+    await ctx.replyWithPhoto(generation.src, {
+      caption: message,
+    });
   } catch (error) {
-    console.error(error.message);
-    ctx.reply("The generation doesn't exist");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      await ctx.reply(i18n.t("error.generation"));
+    }
   }
 };
 
@@ -83,15 +90,17 @@ export const showRegion = async (ctx) => {
     const region = await getRegion(id);
 
     const message =
-      `Region: ${region.name}\n` +
-      `Generation: ${region.generation}\n` +
-      `Total places: ${region.totalLocalization}\n` +
-      `Appears games: ${region.games}\n`;
+      `${i18n.t("pokemon.region")}: ${region.name}\n` +
+      `${i18n.t("pokemon.generation")}: ${region.generation}\n` +
+      `${i18n.t("pokemon.total_places")}: ${region.totalLocalization}\n` +
+      `${i18n.t("pokemon.appears_games")}: ${region.games}\n`;
 
     await ctx.reply(message);
   } catch (error) {
-    console.error(error);
-    ctx.reply("The region doesn't exist");
+    console.error(error.name, error.message);
+    if (error.name === "TypeError") {
+      ctx.reply(i18n.t("error.generation"));
+    }
   }
 };
 
@@ -105,38 +114,41 @@ export const showRegion = async (ctx) => {
 export const showEntry = async (ctx) => {
   try {
     const pokemon = getTextFromCommand(ctx.message.text);
-    const pokemonData = await getEntries(pokemon);
+    const pokemonEntryData = await getEntries(pokemon);
+    const pokemonData = await getPokemon(pokemon);
+    const lang = getLanguage(ctx);
 
-    if (!pokemonData) return;
+    if (!pokemonEntryData || !pokemonData) return;
 
-    const games = pokemonData.entries
-      .filter((entry) => entry.language.name === "en")
+    const games = pokemonEntryData.entries
+      .filter((entry) => entry.language.name === lang)
       .map((entry) => entry.version.name);
+
     const gamesPokemon = divideArray(games);
-    const pokemonEntry = pokemonData.entries.find(
-      (entry) => entry.language.name === "en"
+    const pokemonEntry = pokemonEntryData.entries.find(
+      (entry) => entry.language.name === lang
     );
+
     const pokemonGame = capitalize(pokemonEntry.version.name);
-    const pokemonName = capitalize(pokemonData.name);
+    const pokemonName = capitalize(pokemonEntryData.name);
 
     const keyboard = keyboardGames(gamesPokemon);
-    const message = `Entry of ${pokemonName} in Pokemon ${pokemonGame}:\n\n${pokemonEntry.flavor_text}`;
+    const message =
+      `${i18n.t("pokemon.entry_of")} ${pokemonName}` +
+      `\n\nPokemon ${i18n.t("pokemon.game")} ${pokemonGame}:\n` +
+      `${pokemonEntry.flavor_text}`;
 
+    await ctx.replyWithPhoto(pokemonData.sprite);
     await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
   } catch (error) {
-    console.error(error);
-    ctx.reply("The pokemon entry doesn't exist");
-  }
-};
+    console.error(error.name, error.message);
 
-export const showEntryByLanguage = async (languageSelected) => {
-  // const pokemon = getTextFromCommand(ctx.message.text);
-  // const pokemonEntries = await getEntries(pokemon);
-  // if (!pokemonEntries) return;
-  // const languagesNames = pokemonEntries.map((entry) => entry.language.name);
-  // const languages = Array.from(new Set(languagesNames)).sort();
-  // const languagesBtn = languages.map((language) => [
-  //   Markup.button.callback(language, language),
-  // ]);
-  // ctx.telegram.sendMessage(ctx.chat.id, "Elige un idioma", keyboard);
+    if (error.name === "Error") {
+      await ctx.reply(i18n.t("error.default"));
+    }
+
+    if (error.name === "TypeError") {
+      await ctx.reply(i18n.t("error.entry"));
+    }
+  }
 };

@@ -9,9 +9,6 @@ const baseApiClient = new axios.create({
   headers: {
     "Content-Type": "application/json;charset=utf-8",
   },
-  params: {
-    language: "en",
-  },
 });
 
 /**
@@ -27,6 +24,7 @@ export const getPokemonData = async (pokemon) => {
     return response.data;
   } catch (err) {
     console.error("The pokemon data could not be retrieved");
+    console.error(err.name, err.message);
     return null;
   }
 };
@@ -44,6 +42,7 @@ export const getPokemonSpecie = async (pokemon) => {
     return response.data;
   } catch (err) {
     console.error("The pokemon species data could not be retrieved");
+    console.error(err.name, err.message);
     return null;
   }
 };
