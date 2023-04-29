@@ -1,14 +1,24 @@
 {
   "start": {
-    "init": "Bienvenido al bot",
+    "init": "Bienvenido al bot.",
     "pokedex": "Soy la Pokedex y seré tu herramienta en tu aventura.",
-    "how_to_use": "¿Cómo funciono? Estos son mis comandos:\n/start - mostrar el mensaje de bienvenida\n/help - mostrar los comandos disponibles\n/settings - muestra la configuración\n/pokemon + nombre o ID - El pokemon a buscar. Ejemplo: /pokemon pikachu\n\nIntenta usar /help para ver todos los comandos"
+    "how_to_use": "¿Cómo funciono? Estos son mis comandos:",
+    "help_commands": "Usa el comando /help para ver todos los comandos."
   },
   "settings": {
     "lang": "Elige un idioma.\n\nEl lenguaje actual es"
   },
   "language": {
-    "en": "You are using now english language",
-    "es": "El español será el idioma por defecto"
+    "en": "You are using now english language.",
+    "es": "El español será el idioma por defecto."
+  },
+  "command": {
+    "start": "/start - mostrar el mensaje de bienvenida.",
+    "pokemon": "/pokemon + nombre o ID - El pokemon a buscar.\nEjemplo: /pokemon pikachu\nEjemplo2: /pokemon 25\n",
+    "generation": "/generation + (1-9) - Muestra los datos de la generación.\nEjemplo: /generation 4",
+    "region": "/region + (1-9) - Muestra los datos de la region.\nEjemplo: /region 4",
+    "entry": "/entry + name or ID - Muestra una entrada del Pokemon seleccionado según el juego.\nEjemplo /entry bulbasaur",
+    "help": "/help - mostrar los comandos disponibles.",
+    "settings": "/settings - muestra la configuración."
   }
 }
