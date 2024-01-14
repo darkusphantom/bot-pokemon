@@ -11,7 +11,11 @@ import { showSetting } from "./commands/settings";
 import { entryPokemonHandler } from "./events/onText";
 import { changeLanguageHandler } from "./events/onLanguage";
 import { configEnvironment } from "./config/config";
+import { development } from './core/development';
+import { production } from './core/production';
 
+
+const ENVIRONMENT = process.env.NODE_ENV || '';
 const { token } = configEnvironment();
 const bot = new Telegraf(token);
 
@@ -37,9 +41,12 @@ bot.action(/entry_.+/, entryPokemonHandler);
 bot.action("lang_en", changeLanguageHandler);
 bot.action("lang_es", changeLanguageHandler);
 
-bot.launch();
+// bot.launch();
 
-// prod mode (Vercel)
+//prod mode (Vercel)
 export const startVercel = async (req, res) => {
+  console.log("dorime")
   await production(req, res, bot);
 };
+//dev mode
+ENVIRONMENT !== 'production' && development(bot);
