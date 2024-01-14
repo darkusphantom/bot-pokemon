@@ -38,3 +38,8 @@ bot.action("lang_en", changeLanguageHandler);
 bot.action("lang_es", changeLanguageHandler);
 
 bot.launch();
+
+// prod mode (Vercel)
+export const startVercel = async (req, res) => {
+  await production(req, res, bot);
+};

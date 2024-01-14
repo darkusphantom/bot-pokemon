@@ -1,8 +1,9 @@
 {
   "name": "bot-telegram-pokemon",
   "version": "1.0.0",
-  "description": "It's a bot",
-  "main": "index.js",
+  "description": "It's a pokemon bot",
+  "main": "src/bot.js",
+  "homepage": "https://github.com/darkusphantom/bot-pokemon",
   "scripts": {
     "start": "nodemon --exec babel-node src/bot.js",
     "start:example": "nodemon --exec babel-node src/bot-example.js",
@@ -13,12 +14,12 @@
   },
   "keywords": [
     "bot",
-    "ia",
+    "api",
     "nodejs",
     "javascript",
     "telegram"
   ],
-  "author": "darkusphantom13@gmail.com",
+  "author": "Luis Rodriguez (darkusphantom.com)",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.23.7",
