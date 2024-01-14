@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "outDir": "public",
+    "lib": ["esnext", "dom"],
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules"]
+}

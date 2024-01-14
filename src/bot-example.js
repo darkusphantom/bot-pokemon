@@ -34,6 +34,11 @@ bot.on("location", (ctx) => {
 
 bot.launch();
 
+// //prod mode (Vercel)
+// export const startVercel = async (req, res) => {
+//   await production(req, res, bot);
+// };
+
 /*
 El middleware se utiliza para registrar acciones realizadas por el usuario.
 En este caso, hemos utilizado el middleware para registrar la acción del usuario en la consola.
