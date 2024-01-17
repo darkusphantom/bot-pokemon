@@ -1,3 +1,5 @@
+import { Generation } from "../interfaces/pokemon/generation";
+
 const axios = require("axios");
 const dotenv = require("dotenv");
 
@@ -16,9 +18,9 @@ const baseApiClient = new axios.create({
  *
  * @async
  * @param {number} id - The ID of the desired Pokémon generation.
- * @returns {Promise<Object|null>} An object with the Pokémon generation data corresponding to the provided ID, or null if the information could not be obtained.
+ * @returns {Promise<Generation|null>} An object with the Pokémon generation data corresponding to the provided ID, or null if the information could not be obtained.
  */
-export const getGenerationData = async (id: number): Promise<any | null> => {
+export const getGenerationData = async (id: number): Promise<Generation | null> => {
     try {
         const response = await baseApiClient.get(`/generation/${id}`);
         return response.data;

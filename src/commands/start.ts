@@ -2,12 +2,13 @@
 
 import { Context } from "telegraf";
 import { translate } from "../config/i18n";
+import { errorHandlerMessage } from "../client/errorHandler";
 
 
 /**
  * Displays in the chat information about the settings.
  *
- * @param {object} ctx - The context of the conversation in which the information is being displayed.
+ * @param {Context} ctx - The context of the conversation in which the information is being displayed.
  */
 const welcomeMessage = async (ctx: Context) => {
     try {
@@ -25,8 +26,9 @@ const welcomeMessage = async (ctx: Context) => {
             `${translate("start.help_commands")}\n`;
 
         await ctx.reply(init + message);
-    } catch (error: any) {
-        console.error(error.message);
+    } catch (error: unknown) {
+        const messageError = errorHandlerMessage(error, "error.default");
+        await ctx.reply(messageError);
     }
 };
 

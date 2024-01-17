@@ -28,4 +28,6 @@ i18n.init({
 
 const translate = i18n.t
 
-export { i18n, translate };
+const changeLanguage = i18n.changeLanguage
+
+export { i18n, translate, changeLanguage };

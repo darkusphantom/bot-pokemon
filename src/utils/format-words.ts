@@ -1,7 +1,7 @@
 /**
  * Transform a text to capitalize
  *
- * @param {string} command
+ * @param {string} string
  * @returns {string}
  */
 const capitalize = (string: string): string => {
@@ -11,7 +11,7 @@ const capitalize = (string: string): string => {
 /**
  * Delete all the spaces in the text
  *
- * @param {string} command
+ * @param {string} string
  * @returns {string}
  */
 const deleteSpace = (string: string): string => {
@@ -22,7 +22,7 @@ const deleteSpace = (string: string): string => {
 /**
  * Convert a string to lowercase
  *
- * @param {string} command
+ * @param {string} string
  * @returns {string}
  */
 const convertLowerCase = (string: string): string => {

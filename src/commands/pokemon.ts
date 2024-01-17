@@ -7,6 +7,7 @@ import { keyboardGames } from "../utils/keyboard";
 import { getLanguage } from "../utils/language";
 import { translate } from "../config";
 import { getEntries, getGeneration, getPokemon, getRegion } from "../service/pokemon";
+import { errorHandlerMessage } from "../client/errorHandler";
 
 /**
  * Displays the information of the Pokémon provided in the chat.
@@ -24,7 +25,6 @@ const showPokemon = async (ctx: any): Promise<void> => {
 
         const height = pokemon.height / 10;
 
-
         const message =
             `${translate("pokemon.pokedex_national")}: ${pokemon.id}\n` +
             `Pokemon: ${pokemon.name}\n` +
@@ -33,12 +33,10 @@ const showPokemon = async (ctx: any): Promise<void> => {
             `${translate("pokemon.abilities")}: ${pokemon.abilities}\n` +
             `${translate("pokemon.height")}: ${height}m\n`;
 
-        await ctx.replyWithPhoto(pokemon.sprite, { caption: message });
-    } catch (error: any) {
-        console.error(error.name, error.message);
-        if (error.name === "TypeError") {
-            await ctx.reply(translate("error.pokemon_doesnt_exist"));
-        }
+        await ctx.replyWithPhoto(pokemon.sprites, { caption: message });
+    } catch (error: unknown) {
+        const messageError = errorHandlerMessage(error, "error.default");
+        await ctx.reply(messageError);
     }
 };
 
@@ -66,11 +64,9 @@ const showGeneration = async (ctx: any): Promise<void> => {
         await ctx.replyWithPhoto(generation.src, {
             caption: message,
         });
-    } catch (error: any) {
-        console.error(error.name, error.message);
-        if (error.name === "TypeError") {
-            await ctx.reply(translate("error.generation"));
-        }
+    } catch (error: unknown) {
+        const messageError = errorHandlerMessage(error, "error.generation");
+        await ctx.reply(messageError);
     }
 };
 
@@ -86,6 +82,8 @@ const showRegion = async (ctx: any): Promise<void> => {
         const id = getTextFromCommand(ctx.message.text);
         const region = await getRegion(id);
 
+        if (!region) return;
+
         const message =
             `${translate("pokemon.region")}: ${region.name}\n` +
             `${translate("pokemon.generation")}: ${region.generation}\n` +
@@ -93,11 +91,9 @@ const showRegion = async (ctx: any): Promise<void> => {
             `${translate("pokemon.appears_games")}: ${region.games}\n`;
 
         await ctx.reply(message);
-    } catch (error: any) {
-        console.error(error.name, error.message);
-        if (error.name === "TypeError") {
-            ctx.reply(translate("error.generation"));
-        }
+    } catch (error: unknown) {
+        const messageError = errorHandlerMessage(error, "error.region");
+        await ctx.reply(messageError);
     }
 };
 
@@ -135,18 +131,11 @@ const showEntry = async (ctx: any): Promise<void> => {
             `\n\nPokemon ${pokemonGame}:\n` +
             `${pokemonEntry.flavor_text}`;
 
-        await ctx.replyWithPhoto(pokemonData.sprite);
+        await ctx.replyWithPhoto(pokemonData.sprites);
         await ctx.telegram.sendMessage(ctx.chat.id, message, keyboard);
     } catch (error: any) {
-        console.error(error.name, error.message);
-
-        if (error.name === "Error") {
-            await ctx.reply(translate("error.default"));
-        }
-
-        if (error.name === "TypeError") {
-            await ctx.reply(translate("error.entry"));
-        }
+        const messageError = errorHandlerMessage(error, "error.entry");
+        await ctx.reply(messageError);
     }
 };
 
