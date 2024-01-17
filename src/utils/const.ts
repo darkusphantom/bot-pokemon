@@ -16,7 +16,7 @@ export const regionLimits = {
 /**
  * All url region images
  */
-export const regionImages = [
+export const regionImages: string[] = [
     "https://wallpapercave.com/wp/wp7280733.jpg", // Kanto
     "https://static.wikia.nocookie.net/pokemon/images/f/fe/Johto_HGSS.png", // Johto
     "https://static.wikia.nocookie.net/pokemon/images/d/dd/Hoenn_E.jpg", // Hoenn

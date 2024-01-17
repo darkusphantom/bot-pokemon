@@ -1,5 +1,6 @@
 import { translate } from "../config";
 import { getLanguage, setLanguage } from "../utils";
+import { errorHandlerMessage } from "../client/errorHandler";
 
 /**
  * Change the language
@@ -22,7 +23,7 @@ export const changeLanguageHandler = async (ctx: any): Promise<void> => {
 
         await ctx.reply(message);
     } catch (error: any) {
-        console.error(error.message);
-        ctx.reply(translate("error.language"));
+        const messageError = errorHandlerMessage(error, "error.language");
+        await ctx.reply(messageError);
     }
 };

@@ -16,7 +16,7 @@ export const keyboardLanguage = () =>
  *
  * @returns {Markup} - Inline keyboard with two buttons to select a game.
  */
-export const keyboardGames = (games: any[]) => {
+export const keyboardGames = (games: any[]): any => {
     const buttons = games.map((gameByNames: any) =>
         gameByNames.map((game: any) => Markup.button.callback(game, `entry_${game}`))
     );

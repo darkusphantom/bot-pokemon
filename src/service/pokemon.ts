@@ -1,5 +1,9 @@
 import { getGenerationData, getRegionData } from "../client";
 import { getPokemonData, getPokemonSpecie } from "../client/pokemonApiClient";
+import { GenerationShort } from "../interfaces/pokemon/generation";
+import { PokemonEntry } from "../interfaces/pokemon/pokedex.interface";
+import { Pokemon, PokemonShort } from "../interfaces/pokemon/pokemon.interface";
+import { RegionShort } from "../interfaces/pokemon/region.interface";
 import { capitalize, regionImages, regionLimits } from "../utils";
 
 /**
@@ -9,8 +13,9 @@ import { capitalize, regionImages, regionLimits } from "../utils";
  * @param {string|number} pokemon - The name or ID of the Pokémon to be retrieved.
  * @returns {Promise<Object|null>} An object with the Pokémon information corresponding to the name or ID provided, or null if the information could not be obtained.
  */
-const getPokemon = async (pokemon: string | number): Promise<any> => {
+const getPokemon = async (pokemon: string | number): Promise<PokemonShort | null> => {
     const pokemonSelected = await getPokemonData(pokemon);
+    if (!pokemonSelected) return null;
 
     const name = capitalize(pokemonSelected.name);
     const pokemonTypes = pokemonSelected.types.map((pk: any) =>
@@ -32,7 +37,7 @@ const getPokemon = async (pokemon: string | number): Promise<any> => {
         types,
         abilities,
         height: pokemonSelected.height,
-        sprite: pokemonSelected.sprites.front_default,
+        sprites: pokemonSelected.sprites.front_default,
         region,
     };
 };
@@ -50,8 +55,10 @@ const getPokemon = async (pokemon: string | number): Promise<any> => {
  * - games: A string containing the names of the video games corresponding to the generation.
  * - totalNewTypes: The total number of Pokémon types introduced in the generation.
  */
-const getGeneration = async (id: number): Promise<any> => {
+const getGeneration = async (id: number): Promise<GenerationShort | null> => {
     const generation = await getGenerationData(id);
+    if (!generation) return null;
+
     const games = generation.version_groups.map((game: any) => game.name).join(", ");
     const regionImage = regionImages[generation.id] || "Image not found";
 
@@ -72,11 +79,13 @@ const getGeneration = async (id: number): Promise<any> => {
  * @param {number|string} id - The ID or name of the region of Pokémon to be obtained.
  * @returns {Promise<Object>} An object containing the following region data:
  */
-const getRegion = async (id: number | string): Promise<any | null> => {
+const getRegion = async (id: number | string): Promise<RegionShort | null> => {
     const region = await getRegionData(id);
-    const games = region.version_groups.map((game: any) => game.name).join(", ");
+    if (!region) return null
 
-    if (!games) return null;
+    const games = region.version_groups
+        .map((game: any) => game.name)
+        .join(", ");
 
     return {
         name: capitalize(region.name),
@@ -91,13 +100,13 @@ const getRegion = async (id: number | string): Promise<any | null> => {
  *
  * @async
  * @param {string} pokemon - The name or ID of the pokemon.
- * @returns {Promise<{name: string, entries: Array}>} - Object containing the pokemon name and its flavor text entries.
+ * @returns {Promise<PokemonEntry>} - Object containing the pokemon name and its flavor text entries.
  */
-const getEntries = async (pokemon: string): Promise<{ name: string; entries: Array<any>; } | any> => {
+const getEntries = async (pokemon: string): Promise<PokemonEntry | null> => {
     const pokemonSpecie = await getPokemonSpecie(pokemon);
-    const entries = pokemonSpecie.flavor_text_entries;
+    const entries = pokemonSpecie?.flavor_text_entries;
 
-    if (!entries) return;
+    if (!entries) return null;
 
     return {
         name: pokemonSpecie.name,
