@@ -26,4 +26,6 @@ i18n.init({
     },
 });
 
-export { i18n };
+const translate = i18n.t
+
+export { i18n, translate };

@@ -1,21 +1,18 @@
 import { Telegraf, session } from 'telegraf';
 
-import { about, welcomeMessage } from './commands';
+import { howToUseBot, welcomeMessage } from './commands';
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
+import { configEnvironment } from './config/enviroment';
 
-const BOT_TOKEN = process.env.BOT_TOKEN || '';
-const ENVIRONMENT = process.env.NODE_ENV || '';
-
-// const { token, environment } = configEnvironment();
-const bot = new Telegraf(BOT_TOKEN);
+const { token: TOKEN, environment: ENVIRONMENT } = configEnvironment();
+const bot = new Telegraf(TOKEN);
 
 bot.use(session({ defaultSession: () => ({ language: "en" }) }));
 
 bot.start(welcomeMessage);
-
-// bot.help(howToUseBot);
+bot.help(howToUseBot);
 
 // bot.settings(showSetting);
 
