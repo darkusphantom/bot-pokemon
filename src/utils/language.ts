@@ -1,4 +1,4 @@
-import i18n from "../config/i18";
+import { i18n } from "../config/i18n";
 
 /**
  *  Change the language actual
@@ -6,9 +6,9 @@ import i18n from "../config/i18";
  * @param {Telegraf:Context} ctx - The Telegraf context object.
  * @param {string} - Language to change
  */
-export const setLanguage = (ctx, language) => {
-  ctx.session.language = language;
-  i18n.changeLanguage(language);
+const setLanguage = (ctx: any, language: string) => {
+    ctx.session.language = language;
+    i18n.changeLanguage(language);
 };
 
 /**
@@ -17,6 +17,11 @@ export const setLanguage = (ctx, language) => {
  * @param {Telegraf:Context} ctx - The Telegraf context object.
  * @returns {string} - Language actual
  */
-export const getLanguage = (ctx) => {
-  return ctx.session.language || "en";
+const getLanguage = (ctx: any) => {
+    return ctx.session.language || "en";
 };
+
+export {
+    setLanguage,
+    getLanguage
+}

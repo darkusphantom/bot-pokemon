@@ -1,47 +1,48 @@
 {
-  "start": {
-    "init": "Bienvenido al bot.",
-    "pokedex": "Soy la Pokedex y seré tu herramienta en tu aventura.",
-    "help_commands": "Usa el comando /help para ver todos los comandos."
-  },
-  "settings": {
-    "lang": "Elige un idioma.\n\nEl lenguaje actual es"
-  },
-  "language": {
-    "en": "You are using now english language.",
-    "es": "El español será el idioma por defecto."
-  },
-  "command": {
-    "how_to_use": "¿Cómo funciono? Estos son mis comandos:",
-    "start": "/start - mostrar el mensaje de bienvenida.",
-    "pokemon": "/pokemon + nombre o ID - El pokemon a buscar.\nEjemplo: /pokemon pikachu\nEjemplo2: /pokemon 25\n",
-    "generation": "/generation + (1-9) - Muestra los datos de la generación.\nEjemplo: /generation 4",
-    "region": "/region + (1-9) - Muestra los datos de la region.\nEjemplo: /region 4",
-    "entry": "/entry + name or ID - Muestra una entrada del Pokemon seleccionado según el juego.\nEjemplo /entry bulbasaur",
-    "help": "/help - mostrar los comandos disponibles.",
-    "settings": "/settings - muestra la configuración."
-  },
-  "error": {
-    "default": "Ha ocurrido un error",
-    "pokemon_doesnt_exist": "El pokemon no existe. Intente por ID u otro nombre",
-    "region": "La región no existe. Intente con otra region.",
-    "generation": "La generación no existe. Intente con otra generación.",
-    "entry": "La entrada del pokemon no existe. Intente con con el ID u otro Pokemon.",
-    "language": "Ocurrió un error al cambiar de idioma. Intente de nuevo."
-  },
-  "pokemon": {
-    "pokedex_national": "Pokedex Nacional",
-    "region": "Región",
-    "type": "Tipo",
-    "abilities": "Habilidades",
-    "height": "Altura",
-    "generation": "Generación",
-    "new_pokemon": "Pokemon nuevos",
-    "new_pokemon_types": "Tipos nuevos",
-    "games": "Juegos",
-    "total_places": "Total de Lugares",
-    "appears_games": "Apariciones",
-    "entry_of": "Entrada de",
-    "game": "Juego"
+    "start": {
+      "init": "Bienvenido al bot.",
+      "pokedex": "Soy la Pokedex y seré tu herramienta en tu aventura.",
+      "help_commands": "Usa el comando /help para ver todos los comandos."
+    },
+    "settings": {
+      "lang": "Elige un idioma.\n\nEl lenguaje actual es"
+    },
+    "language": {
+      "en": "You are using now english language.",
+      "es": "El español será el idioma por defecto."
+    },
+    "command": {
+      "how_to_use": "¿Cómo funciono? Estos son mis comandos:",
+      "start": "/start - mostrar el mensaje de bienvenida.",
+      "pokemon": "/pokemon + nombre o ID - El pokemon a buscar.\nEjemplo: /pokemon pikachu\nEjemplo2: /pokemon 25\n",
+      "generation": "/generation + (1-9) - Muestra los datos de la generación.\nEjemplo: /generation 4",
+      "region": "/region + (1-9) - Muestra los datos de la region.\nEjemplo: /region 4",
+      "entry": "/entry + name or ID - Muestra una entrada del Pokemon seleccionado según el juego.\nEjemplo /entry bulbasaur",
+      "help": "/help - mostrar los comandos disponibles.",
+      "settings": "/settings - muestra la configuración."
+    },
+    "error": {
+      "default": "Ha ocurrido un error",
+      "pokemon_doesnt_exist": "El pokemon no existe. Intente por ID u otro nombre",
+      "region": "La región no existe. Intente con otra region.",
+      "generation": "La generación no existe. Intente con otra generación.",
+      "entry": "La entrada del pokemon no existe. Intente con con el ID u otro Pokemon.",
+      "language": "Ocurrió un error al cambiar de idioma. Intente de nuevo."
+    },
+    "pokemon": {
+      "pokedex_national": "Pokedex Nacional",
+      "region": "Región",
+      "type": "Tipo",
+      "abilities": "Habilidades",
+      "height": "Altura",
+      "generation": "Generación",
+      "new_pokemon": "Pokemon nuevos",
+      "new_pokemon_types": "Tipos nuevos",
+      "games": "Juegos",
+      "total_places": "Total de Lugares",
+      "appears_games": "Apariciones",
+      "entry_of": "Entrada de",
+      "game": "Juego"
+    }
   }
-}
+  
